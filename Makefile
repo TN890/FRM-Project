@@ -1,20 +1,20 @@
 CC = g++
 CFLAGS = -Wall -ggdb3 -std=c++11
 
-OptionPricer02: OptionPricer02.o BinomialTreeModel.o Option02.o
-	$(CC) $(CFLAGS) -o OptionPricer02 OptionPricer02.o BinomialTreeModel.o Option02.o
+OptionPricer: OptionPricer.o BinomialTreeModel.o Option.o
+	$(CC) $(CFLAGS) -o OptionPricer OptionPricer.o BinomialTreeModel.o Option.o
 
-OptionPricer01.o: OptionPricer02.cpp BinomialTreeModel.h Option02.h
-	$(CC) $(CFLAGS) -c OptionPricer02.cpp
+OptionPricer.o: OptionPricer.cpp BinomialTreeModel.h Option.h
+	$(CC) $(CFLAGS) -c OptionPricer.cpp
 
-Option01.o: BinomialTreeModel.h Option02.h Option02.cpp
-	$(CC) $(CFLAGS) -c Option02.cpp
+Option.o: BinomialTreeModel.h Option.h Option.cpp
+	$(CC) $(CFLAGS) -c Option.cpp
 	
 BinomialTreeModel.o: BinomialTreeModel.h BinomialTreeModel.cpp
 	$(CC) $(CFLAGS) -c BinomialTreeModel.cpp
 	
 clean:
-	rm -rf OptionPricer02 *.o
+	rm -rf OptionPricer *.o
 
 
 

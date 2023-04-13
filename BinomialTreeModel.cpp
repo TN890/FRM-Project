@@ -2,62 +2,55 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-
-namespace fre {
-    //compute risk-neutral probability
-    double RiskNeutProb(double U, double D, double R)
-    {
+namespace fre 
+{
+    double BinomialTreeModel::RiskNeutProb() const
+    { 
         return (R - D) / (U - D);
     }
-
-    //compute the asset price at node n,i
-    double CalculateAssetPrice(double S0, double U, double D, int n, int i)
-    {
+    double BinomialTreeModel::CalculateAssetPrice(int n, int i) const
+    { 
         return S0 * pow(U, i) * pow(D, n - i);
     }
-
-    //input, display, and check model data
-    int GetInputData(double& S0, double& U, double& D, double& R)
+    void BinomialTreeModel::UpdateBinomialTreeModel(double S0_, double U_,double D_, double R_)
+    { 
+        S0 = S0_; U = U_; D = D_; R = R_;
+    }
+    int BinomialTreeModel::GetInputData()
     {
         //entering data
         cout << "Enter S0: "; cin >> S0;
-        cout << "Enter U:  "; cin >> U;
-        cout << "Enter D:  "; cin >> D;
-        cout << "Enter R:  "; cin >> R;
+        cout << "Enter U: "; cin >> U;
+        cout << "Enter D: "; cin >> D;
+        cout << "Enter R: "; cin >> R;
         cout << endl;
-
-        //making sure that S0>0, U>D>0, R>0 
-        if (S0 <= 0.0 || U <= 0.0 || D <= 0.0 || U <= D || R <= 0.0)
-        {
+        //making sure that 0<S0, -1<D<U, -1<R
+        if (S0<=0.0 || U<=-1.0 || D<=-1.0 || U<=D ||R<=-1.0)
+        {       
             cout << "Illegal data ranges" << endl;
             cout << "Terminating program" << endl;
             return -1;
         }
-
         //checking for arbitrage
-        if (R >= U || U <= D)
+        if (R>=U || R<=D)
         {
             cout << "Arbitrage exists" << endl;
             cout << "Terminating program" << endl;
             return -1;
         }
-
         cout << "Input data checked" << endl;
         cout << "There is no arbitrage" << endl << endl;
-
         return 0;
     }
-
-    int ValidateInputData(const double& S0, const double& U, const double& D, const double& R)
+    int BinomialTreeModel::ValidateInputData() const
     {
-        //making sure that S0>0, U>D>0, R>0 
-        if (S0 <= 0.0 || U <= 0.0 || D <= 0.0 || U <= D || R <= 0.0)
+        //making sure that S0>0, U>D>0, R>0
+        if (S0 <= 0.0 || U <= 0.0 || D <= 0.0|| U <= D || R <= 0.0)
         {
             cout << "Illegal data ranges" << endl;
             cout << "Terminating program" << endl;
             return -1;
         }
-
         //checking for arbitrage
         if (R >= U || U <= D)
         {
@@ -65,11 +58,8 @@ namespace fre {
             cout << "Terminating program" << endl;
             return -1;
         }
-
         cout << "Input data checked" << endl;
-        cout << "There is no arbitrage" << endl << endl;
-
+        cout << "There is no arbitrage" << endl <<endl;
         return 0;
     }
 }
-
